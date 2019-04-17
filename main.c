@@ -99,9 +99,6 @@ void test() {
       result = rotation_encrypt('a', 1);
       printf("result = %c\n", result);
 
-      result = rotation_encrypt('b', 26);
-      printf("result = %c\n", result);
-
       result = substitution_encrypt('b', key2);
       printf("result = %c\n", result);
 
