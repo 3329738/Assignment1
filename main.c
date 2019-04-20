@@ -106,7 +106,9 @@ void substitution_decrypt_string(char* str, char* key){
 void test() {
       char key1[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
       char key2[] = { 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N','M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
-      char str[] = {"fred"};
+      char str1[] = {"fred"};
+      char str2[] = {"kwji"};
+      char str3[] = {"pdqr"};
 
 printf("%s\n", key1);
 
@@ -125,8 +127,17 @@ printf("%s\n", key1);
       result = substitution_decrypt('y', key2);
       printf("result = %c\n", result);
       
-      rotation_encrypt_string(str, 5);
-      printf("String encrypted is: %s\n", str);
+      rotation_encrypt_string(str1, 5);
+      printf("String encrypted is: %s\n", str1);
+      
+      rotation_decrypt_string(str2, 5);
+      printf("String decrypted is: %s\n", str2);
+      
+      substitution_encrypt_string(str1, key2);
+      printf("String encrypted is: %s\n", str1);
+      
+      substitution_decrypt_string(str3, key2);
+      printf("String decrypted is: %s\n", str3);
 }
 
 int main() {
