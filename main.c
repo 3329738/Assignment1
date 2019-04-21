@@ -107,9 +107,7 @@ void test() {
       char key1[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
       char key2[] = { 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N','M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
       char str1[] = {"fred"};
-      char str2[] = {"kwji"};
-      char str3[] = {"fred"};
-      char str4[] = {"uivw"};
+
 
 printf("%s\n", key1);
 
@@ -131,18 +129,26 @@ printf("%s\n", key1);
       rotation_encrypt_string(str1, 5);
       printf("String encrypted is: %s\n", str1);
       
-      rotation_decrypt_string(str2, 5);
-      printf("String decrypted is: %s\n", str2);
+      rotation_decrypt_string(str1, 5);
+      printf("String decrypted is: %s\n", str1);
       
-      substitution_encrypt_string(str3, key2);
-      printf("String encrypted is: %s\n", str3);
+      substitution_encrypt_string(str1, key2);
+      printf("String encrypted is: %s\n", str1);
       
-      substitution_decrypt_string(str4, key2);
-      printf("String decrypted is: %s\n", str4);
+      substitution_decrypt_string(str1, key2);
+      printf("String decrypted is: %s\n", str1);
 }
 
 int main() {
       test();
-
-return 0;
+   
+   int choice;
+   
+   do {
+        printf("Do you want to;\n1) Encrypt with a rotation cipher\n2) Decrypt a rotation cipher\n3) Encrypt with a substitution cipher\n4) Decrypt a substitution ciper\nYour choice: "); // Offers a choice of what the code should do and prompts the user to select one
+        scanf("%d\n", &choice);   
+   }
+   while((choice != 1) || (choice != 2) || (choice != 3) || (choice != 4)); // Do while loop prevents error from incorrect intput i.e. none of the options
+   
+   return 0;
 }
