@@ -145,10 +145,21 @@ int main() {
    
    int choice;
    
-   do {
-       printf("Do you want to;\n1) Encrypt with a rotation cipher\n2) Decrypt a rotation cipher\n3) Encrypt with a substitution cipher\n4) Decrypt a substitution ciper\nEnter your choice: "); // Offers a choice of what the code should do and prompts the user to select one
-       fflush(stdout);
-       scanf("%d\n", &choice);
+   //do {
+       printf("Do you want to;\n");
+       printf("1) Encrypt with a rotation cipher\n");
+       printf("2) Decrypt a rotation cipher\n");
+       printf("3) Encrypt with a substitution cipher\n");
+       printf("4) Decrypt a substitution ciper\n");
+       printf("Enter your choice: "); // Offers a choice of what the code should do and prompts the user to select one
+ 
+ char str1[20];
+ printf("Enter name: ");
+   scanf("%s", str1);
+ printf("str1=%s\n");
+ scanf("%d\n", &choice);
+       
+printf("choice was %d\n", choice);     
        /*
        switch(choice){
            case 1: rotation_encrypt_string;
@@ -157,14 +168,14 @@ int main() {
            break;
            case 3: substitution_encrypt_string;
            break;
-           case 4: substiution_decrypt_string;
+           case 4: substitution_decrypt_string;
            break;
            default: printf("Error, invalid input\n");
        }
    */
-   }
+   //}
 
-   while((choice != 1) || (choice != 2) || (choice != 3) || (choice != 4)); // Do while loop prevents error from incorrect intput i.e. none of the options
+   // while((choice != 1) || (choice != 2) || (choice != 3) || (choice != 4)); // Do while loop prevents error from incorrect intput i.e. none of the options
    
    return 0;
 }
