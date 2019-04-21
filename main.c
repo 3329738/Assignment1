@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 
+
 char rotation_encrypt(char c, int key) {
       char encrypted;
 
@@ -145,9 +146,24 @@ int main() {
    int choice;
    
    do {
-        printf("Do you want to;\n1) Encrypt with a rotation cipher\n2) Decrypt a rotation cipher\n3) Encrypt with a substitution cipher\n4) Decrypt a substitution ciper\nYour choice: "); // Offers a choice of what the code should do and prompts the user to select one
-        scanf("%d\n", &choice);   
+       printf("Do you want to;\n1) Encrypt with a rotation cipher\n2) Decrypt a rotation cipher\n3) Encrypt with a substitution cipher\n4) Decrypt a substitution ciper\nEnter your choice: "); // Offers a choice of what the code should do and prompts the user to select one
+       fflush(stdout);
+       scanf("%d\n", &choice);
+       /*
+       switch(choice){
+           case 1: rotation_encrypt_string;
+           break;
+           case 2: rotation_decrypt_string;
+           break;
+           case 3: substitution_encrypt_string;
+           break;
+           case 4: substiution_decrypt_string;
+           break;
+           default: printf("Error, invalid input\n");
+       }
+   */
    }
+
    while((choice != 1) || (choice != 2) || (choice != 3) || (choice != 4)); // Do while loop prevents error from incorrect intput i.e. none of the options
    
    return 0;
