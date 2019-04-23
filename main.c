@@ -121,8 +121,8 @@ void do_rotation_encrypt() {
               char temp;
 
               printf("\n\nEnter rotation key: ");
-              scanf_s("%s", rotKeyStr, 19);
-              scanf_s("%c", &temp, 1);
+              scanf("%s", rotKeyStr);
+              scanf("%c", &temp);
               rotKey = atoi(rotKeyStr);
               printf("\n\nEnter text to encrypt: ");
               //scanf_s("%[^\n]%*c", str, 39);
@@ -139,8 +139,8 @@ void do_rotation_decrypt() {
               char temp;
 
               printf("\n\nEnter rotation key: ");
-              scanf_s("%s", rotKeyStr, 19);
-              scanf_s("%c", &temp, 1);
+              scanf("%s", rotKeyStr, 19);
+              scanf("%c", &temp, 1);
               rotKey = atoi(rotKeyStr);
               printf("\n\nEnter text to decrypt: ");
               fgets(str, 39, stdin);
@@ -183,12 +183,12 @@ void do_substitution_encrypt() {
 
 
               printf("\n\nEnter substitution key of 26 unique letters: ");
-              scanf_s("%c", &temp, 1);
+              scanf("%c", &temp, 1);
               fgets(KeyStr, 27, stdin);
               
               if (is_valid_key(KeyStr)) {
                            printf("\n\nEnter text to encrypt: ");
-                           scanf_s("%c", &temp, 1);
+                           scanf("%c", &temp, 1);
                            fgets(str, 39, stdin);
                            substitution_encrypt_string(str, KeyStr);
                            printf("Encrypted = %s\n", str);
@@ -204,12 +204,12 @@ void do_substitution_decrypt() {
               char Key;
 
               printf("\n\nEnter substitution key of 26 characters: ");
-              scanf_s("%c", &temp, 1);
+              scanf("%c", &temp);
               fgets(KeyStr, 27, stdin);
               
               if (is_valid_key(KeyStr)) {
                            printf("\n\nEnter text to decrypt: ");
-                           scanf_s("%c", &temp, 1);
+                           scanf("%c", &temp);
                            fgets(str, 39, stdin);
                            substitution_decrypt_string(str, KeyStr);
                            printf("Decrypted = %s\n", str);
@@ -221,7 +221,7 @@ void read_dictionary() {
               int index = 0;
               FILE* f;
 
-              fopen_s(&f, "./google-10000-english.txt", "r");
+              fopen(str *f ./google-10000-english.txt);
 
               while (!feof(f)) {
                            //fgets(str, 21, f);
@@ -305,7 +305,7 @@ void brute_force_substitution() {
 }
 
 void test() {
-              char key1[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+              //char key1[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
               char key2[] = { 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N','M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
               char str1[] = { "fred" };
 
