@@ -4,45 +4,68 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct {
-              int key;
-              int freq;
-}KeyFreq;
+typedef struct { //creates a new 2D data type
+              int key; //one dimension of the data type
+              int freq; //other dimension of the data type
+}KeyFreq; //name of new data type
 
-char dictionary[10001][20];
+char dictionary[10001][20]; //to hold the words in the dictionary
 
-char rotation_encrypt(char c, int key) {
-              char encrypted;
+/* rotation_encrypt encrypts single uppercase alpha characters using the formula temp = (character + key)% 26 */
+char rotation_encrypt(char c, int key) { // function to encrypt using rotation ciper with a key
+              char encrypted; // declaring variable to save value to return into
 
-              if (isalpha(c)) {
-                           if (islower(c)) {
-                                         c = toupper(c);
+              if (isalpha(c)) { //checks if a letter
+                           if (islower(c)) { //checks if the letter is lower case
+                                         c = toupper(c); //converts lower case letter to number
                            }
-                           int temp = (int)c - 65;
-                           temp = (temp + key);
-                           temp = (temp % 26) + 65;
-                           encrypted = (char)temp;
+                           int temp = (int)c - 65; //makes A an interger == 0 to allow easier conversions
+                           temp = ((temp + key) % 26) + 65; //uses formula given and adds 26 to return to ASCII values
+                           encrypted = (char)temp; //converts a back to a char and saves in encrypted
               }
-              else {
-                           encrypted = c;
+              else { //if not a letter
+                           encrypted = c; //saves the original character i.e. a . or space in encrypted
               }
-              return encrypted;
+              return encrypted; //function will return encrypted
 }
 
-void rotation_encrypt_string(char* str, int key) {
-              for (unsigned int i = 0; i < strlen(str); i++) {
-                           str[i] = rotation_encrypt(str[i], key);
+/* rotation_encrypt_string converts whole stings using rotation_encrypt by entering each character individually and saving the encrypted into its original string.
+This destroys the original string increasing security of the non encrypted string. If the original string needs to be kept a copy can be made prior to encryption */
+void rotation_encrypt_string(char* str, int key) { //function to move through string and check each character through rotation_encrypt
+              for (unsigned int i = 0; i < strlen(str); i++) { //checks each character of the string until the whole string is complete
+                           str[i] = rotation_encrypt(str[i], key); 
               }
 }
 
+/* Recives user input and uses the function rotation_encrypt_string to encode user input. The user inputs the rotation key, a number for the key to rotate.
+A text which will be encrypted by the rotation key*/
+void do_rotation_encrypt() { //
+              char rotKeyStr[20];
+              int rotKey = 0;
+              char str[40];
+              char temp;
+
+              printf("\n\nEnter rotation key: "); //promts user for infomation
+              scanf("%s", rotKeyStr); 
+              scanf("%c", &temp);
+              rotKey = atoi(rotKeyStr);
+              printf("\n\nEnter text to encrypt: ");
+              //scanf_s("%[^\n]%*c", str, 39);
+              fgets(str, 39, stdin);     //may need to remove fgets
+              rotation_encrypt_string(str, rotKey);
+              printf("Encrypted = %s\n", str);
+
+}
+
+/* roation_decrypt decrypts single characters when given the key they were encoded in using the formula given */
 char rotation_decrypt(char c, int key) {
               char decrypted;
 
-              if (isalpha(c)) {
-                           if (islower(c)) {
-                                         c = toupper(c);
+              if (isalpha(c)) { //checks if letter
+                           if (islower(c)) { //checks if letter is lower case
+                                         c = toupper(c); //converts to uppercase
                            }
-                           int temp = (int)c - 65;
+                           int temp = (int)c - 65; //converts c to sn interger and makes A == 0
                            temp = (temp - key);
                            if (temp < 0) {
                                          temp = temp + 26;
@@ -61,6 +84,23 @@ void rotation_decrypt_string(char* str, int key) {
               for (unsigned int i = 0; i < strlen(str); i++) {
                            str[i] = rotation_decrypt(str[i], key);
               }
+}
+
+void do_rotation_decrypt() {
+              char rotKeyStr[20];
+              int rotKey = 0;
+              char str[40];
+              char temp;
+
+              printf("\n\nEnter rotation key: ");
+              scanf("%s", rotKeyStr);
+              scanf("%c", &temp);
+              rotKey = atoi(rotKeyStr);
+              printf("\n\nEnter text to decrypt: ");
+              fgets(str, 39, stdin);
+              rotation_decrypt_string(str, rotKey);
+              printf("Decrypted = %s\n", str);
+
 }
 
 char substitution_encrypt(char c, char* key) {
@@ -82,6 +122,26 @@ void  substitution_encrypt_string(char* str, char* key) {
               for (unsigned int i = 0; i < strlen(str); i++) {
                            str[i] = substitution_encrypt(str[i], key);
               }
+}
+
+void do_substitution_encrypt() {
+              char KeyStr[27];
+              char str[40];
+              char temp;
+
+              printf("\n\nEnter substitution key of 26 unique letters: ");
+              scanf("%c", &temp);
+              fgets(KeyStr, 27, stdin);
+              
+              if (is_valid_key(KeyStr)) {
+                           printf("\n\nEnter text to encrypt: ");
+                           scanf("%c", &temp);
+                           fgets(str, 39, stdin);
+                           substitution_encrypt_string(str, KeyStr);
+                           printf("Encrypted = %s\n", str);
+              }
+              
+
 }
 
 char substitution_decrypt(char c, char* key) {
@@ -112,41 +172,23 @@ void substitution_decrypt_string(char* str, char* key) {
               }
 }
 
-
-
-void do_rotation_encrypt() {
-              char rotKeyStr[20];
-              int rotKey = 0;
+void do_substitution_decrypt() {
+              char KeyStr[27];
               char str[40];
               char temp;
+              char Key;
 
-              printf("\n\nEnter rotation key: ");
-              scanf("%s", rotKeyStr);
+              printf("\n\nEnter substitution key of 26 characters: ");
               scanf("%c", &temp);
-              rotKey = atoi(rotKeyStr);
-              printf("\n\nEnter text to encrypt: ");
-              //scanf_s("%[^\n]%*c", str, 39);
-              fgets(str, 39, stdin);     
-              rotation_encrypt_string(str, rotKey);
-              printf("Encrypted = %s\n", str);
-
-}
-
-void do_rotation_decrypt() {
-              char rotKeyStr[20];
-              int rotKey = 0;
-              char str[40];
-              char temp;
-
-              printf("\n\nEnter rotation key: ");
-              scanf("%s", rotKeyStr, 19);
-              scanf("%c", &temp, 1);
-              rotKey = atoi(rotKeyStr);
-              printf("\n\nEnter text to decrypt: ");
-              fgets(str, 39, stdin);
-              rotation_decrypt_string(str, rotKey);
-              printf("Decrypted = %s\n", str);
-
+              fgets(KeyStr, 27, stdin);
+              
+              if (is_valid_key(KeyStr)) {
+                           printf("\n\nEnter text to decrypt: ");
+                           scanf("%c", &temp);
+                           fgets(str, 39, stdin);
+                           substitution_decrypt_string(str, KeyStr);
+                           printf("Decrypted = %s\n", str);
+              }
 }
 
 bool is_valid_key(char* key){
@@ -175,57 +217,16 @@ bool is_valid_key(char* key){
               return is_valid;
 }
 
-void do_substitution_encrypt() {
-              char KeyStr[27];
-              char str[40];
-              char temp;
-              char Key;
-
-
-              printf("\n\nEnter substitution key of 26 unique letters: ");
-              scanf("%c", &temp, 1);
-              fgets(KeyStr, 27, stdin);
-              
-              if (is_valid_key(KeyStr)) {
-                           printf("\n\nEnter text to encrypt: ");
-                           scanf("%c", &temp, 1);
-                           fgets(str, 39, stdin);
-                           substitution_encrypt_string(str, KeyStr);
-                           printf("Encrypted = %s\n", str);
-              }
-              
-
-}
-
-void do_substitution_decrypt() {
-              char KeyStr[27];
-              char str[40];
-              char temp;
-              char Key;
-
-              printf("\n\nEnter substitution key of 26 characters: ");
-              scanf("%c", &temp);
-              fgets(KeyStr, 27, stdin);
-              
-              if (is_valid_key(KeyStr)) {
-                           printf("\n\nEnter text to decrypt: ");
-                           scanf("%c", &temp);
-                           fgets(str, 39, stdin);
-                           substitution_decrypt_string(str, KeyStr);
-                           printf("Decrypted = %s\n", str);
-              }
-}
-
 void read_dictionary() {
               char str[21];
               int index = 0;
               FILE* f;
 
-              fopen(str *f ./google-10000-english.txt);
+              fopen(&f, "./google-10000-english.txt");
 
               while (!feof(f)) {
                            //fgets(str, 21, f);
-                           fscanf_s(f, "%s\n", str, 21);
+                           fscanf(f, "%s\n", str);
 
                            // FIXME figure out where the \n s are coming from
                            for (int i = 0; i < strlen(str); i++) {
@@ -260,6 +261,9 @@ bool is_in_dictionary(char* str ) {
 void add_key(int key, KeyFreq *freqs){
               freqs[0].key = 12;
               freqs[0].freq = 1;
+			  //for () {
+
+			  }
 
               
 }
@@ -272,10 +276,10 @@ void brute_force_rotation() {
               KeyFreq freqs[100] = {0};
 
               printf("Enter text to decrypt: ");
-              scanf_s("%c", &temp, 1);
+              scanf("%c", &temp);
               fgets(str, 10000, stdin);
               const char s[2] = " ";
-              token = strtok_s(str, s, &next_token);
+              token = strtok(str, s/*&next_token*/);
 
               // While there are tokens in "string1" or "string2"
               while (token != NULL)
@@ -301,11 +305,12 @@ void brute_force_rotation() {
 }
 
 void brute_force_substitution() {
+	printf("Sorry not worth the marks");
 
 }
 
-void test() {
-              //char key1[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+/*void test() {
+              char key1[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
               char key2[] = { 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N','M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
               char str1[] = { "fred" };
 
@@ -337,21 +342,14 @@ void test() {
               printf("String decrypted is: %s\n", str1);
 
               read_dictionary();
-}
+}*/
 
 int main() {
               read_dictionary();
+              char choice; //initialises variable to hold the users menu choice
 
-              /*
-              char key1[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-              char key2[] = { 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N','M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
-              char str1[] = { "fred" };
-              char str2[] = { "pbon" };
-              char str3[] = { "uivw" };
-              */
-              char choice;
-
-              do {
+              do { //do while loop continues until the while condition is met
+			  /*Offers a choice of what the code should do and prompts the user to select one*/
               printf("\n\nDo you want to;\n");
               printf("1) Encrypt with a rotation cipher\n");
               printf("2) Decrypt a rotation cipher\n");
@@ -360,12 +358,12 @@ int main() {
               printf("5) Brute force on rotation ciper\n");
               printf("6) Brute force on a substitution ciper\n");
               printf("7) Quit\n");
-              printf("Enter your choice: "); // Offers a choice of what the code should do and prompts the user to select one
-              scanf_s("%c", &choice, 1);
+              printf("Enter your choice: "); 
+              scanf("%c", &choice); //Reads the input of the user's choice
 
-                           switch(choice){
-                                         case '1': do_rotation_encrypt();
-                                                       break;
+                           switch(choice){ //Allows the user to do their chosen option
+                                         case '1': do_rotation_encrypt(); 
+                                                       break; //break exits the function so all other cases below aren't executed
                                          case '2': do_rotation_decrypt();
                                                        break;
                                          case '3': do_substitution_encrypt();
@@ -376,13 +374,13 @@ int main() {
                                                        break;
                                          case '6': brute_force_substitution();
                                                        break;
-                                         case '7': choice = 0;
+                                         case '7': choice = 0; //creates the condition needed to exit the code
                                                        break;
-                                         default: printf("Error, invalid input\n");
+                                         default: printf("Error, invalid input\n"); //Tells the user their input was wrong and will not complete any action
                            }
 
               }
-              while(choice != 0); // Do while loop prevents error from incorrect intput i.e. none of the options
+              while(choice != 0); // Exits only when the user is done with the program i.e. choice = 0 
 
               return 0;
 }
