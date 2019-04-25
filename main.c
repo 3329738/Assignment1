@@ -2,7 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
+//#include <std_Bool.h>
 
 typedef struct { //creates a new 2D data type
               int key; //one dimension of the data type
@@ -192,8 +192,8 @@ void do_substitution_decrypt() {
               }
 }
 
-bool is_valid_key(char* key){
-              bool is_valid_key = true;
+_Bool is_valid_key(char* key){
+              _Bool is_valid_key = true;
               int sum = 0;
               if (strlen(key) == 26) {
                            for (int i = 0; i < 26; i++) {
@@ -247,8 +247,8 @@ void read_dictionary() {
 
 }
 
-bool is_in_dictionary(char* str ) {
-              bool found = false;
+_Bool is_in_dictionary(char* str ) {
+              _Bool found = false;
               for (int i = 0; i < 10000; i++) {
                            if (strcmp(dictionary[i], str) == 0) {
                                          printf("found it\n");
