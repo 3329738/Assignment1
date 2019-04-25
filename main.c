@@ -125,19 +125,20 @@ void  substitution_encrypt_string(char* str, char* key) {
 }
 
 void do_substitution_encrypt() {
-              char KeyStr[27];
+              char keyStr[27];
               char str[40];
               char temp;
+              char key;
 
               printf("\n\nEnter substitution key of 26 unique letters: ");
               scanf("%c", &temp);
-              fgets(KeyStr, 27, stdin);
+              fgets(keyStr, 27, stdin);
               
-              if (is_valid_key(KeyStr)) {
+              if (is_valid_key(keyStr, key)) {
                            printf("\n\nEnter text to encrypt: ");
                            scanf("%c", &temp);
                            fgets(str, 39, stdin);
-                           substitution_encrypt_string(str, KeyStr);
+                           substitution_encrypt_string(str, keyStr);
                            printf("Encrypted = %s\n", str);
               }
               
@@ -173,48 +174,48 @@ void substitution_decrypt_string(char* str, char* key) {
 }
 
 void do_substitution_decrypt() {
-              char KeyStr[27];
+              char keyStr[27];
               char str[40];
               char temp;
-              char Key;
+              char key;
 
               printf("\n\nEnter substitution key of 26 characters: ");
               scanf("%c", &temp);
-              fgets(KeyStr, 27, stdin);
+              fgets(keyStr, 27, stdin);
               
-              if (is_valid_key(KeyStr)) {
+              if (is_valid_key(keyStr, key)) {
                            printf("\n\nEnter text to decrypt: ");
                            scanf("%c", &temp);
                            fgets(str, 39, stdin);
-                           substitution_decrypt_string(str, KeyStr);
+                           substitution_decrypt_string(str, keyStr);
                            printf("Decrypted = %s\n", str);
               }
 }
 
 bool is_valid_key(char* key){
-              bool is_valid = true;
+              bool is_valid_key = true;
               int sum = 0;
               if (strlen(key) == 26) {
                            for (int i = 0; i < 26; i++) {
                                          key[i] = toupper(key[i]);
                                          sum = sum + key[i];
                                          if (!isalpha(key[i])) {
-                                                       is_valid = false;
+                                                       is_valid_key = false;
                                                        printf("Error: string is not all alpha\n");
                                                        break;
                                          }
                            }
                            if (sum != 2015) {
-                                         is_valid = false;
+                                         is_valid_key = false;
                                          printf("Error: string contains repeats of letters\n");
                            }
               }
               else {
-              is_valid = false;
+              is_valid_key = false;
               printf("Error: String is not 26 characters long\n");
               }
               
-              return is_valid;
+              return is_valid_key;
 }
 
 void read_dictionary() {
@@ -222,7 +223,7 @@ void read_dictionary() {
               int index = 0;
               FILE* f;
 
-              fopen(&f, "./google-10000-english.txt");
+              fopen("./google-10000-english.txt", "r"/*const char *filename, const char *mode*/);
 
               while (!feof(f)) {
                            //fgets(str, 21, f);
@@ -239,7 +240,7 @@ void read_dictionary() {
 
                            }
                                          
-                           strcpy_s(dictionary[index], 21, str);
+                           strcpy(dictionary[index], str);
                            index++;
               }
               fclose(f);
@@ -258,7 +259,7 @@ bool is_in_dictionary(char* str ) {
               return found;
 }
 
-void add_key(int key, KeyFreq *freqs){
+/*void add_key(int key, KeyFreq *freqs){
               freqs[0].key = 12;
               freqs[0].freq = 1;
 			  //for () {
@@ -266,14 +267,14 @@ void add_key(int key, KeyFreq *freqs){
 			  }
 
               
-}
+}*/
 
 void brute_force_rotation() {
               char str[10000];
               char temp;
               char* token;
-              char* next_token;
-              KeyFreq freqs[100] = {0};
+              //char* next_token;
+              //KeyFreq freqs[100] = {0};
 
               printf("Enter text to decrypt: ");
               scanf("%c", &temp);
@@ -290,14 +291,14 @@ void brute_force_rotation() {
                                          printf(" %s\n", token);
                                          
                                          for (int i = 1; i < 26; i++) {
-                                                       char* temp = _strdup(token);
+                                                       char* temp = strdup(token);
                                                        rotation_decrypt_string(temp, i);
                                                        if (is_in_dictionary(temp)) {
                                                                     printf("Key is: %d, Str = %s, Temp = %s\n", i, str, temp);
                                                        }
                                                        free(temp);
                                          }
-                                         token = strtok_s(NULL, s, &next_token);
+                                         token = strtok(NULL, str /*char *str, const char *delim*/);
 
                            
               }
