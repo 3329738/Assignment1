@@ -2,7 +2,8 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
-//#include <std_Bool.h>
+
+char is_valid_key(char* key);
 
 typedef struct { //creates a new 2D data type
               int key; //one dimension of the data type
@@ -134,7 +135,7 @@ void do_substitution_encrypt() {
               scanf("%c", &temp);
               fgets(keyStr, 27, stdin);
               
-              if (is_valid_key(keyStr, key)) {
+              if (is_valid_key(keyStr)) {
                            printf("\n\nEnter text to encrypt: ");
                            scanf("%c", &temp);
                            fgets(str, 39, stdin);
@@ -183,7 +184,7 @@ void do_substitution_decrypt() {
               scanf("%c", &temp);
               fgets(keyStr, 27, stdin);
               
-              if (is_valid_key(keyStr, key)) {
+              if (is_valid_key(keyStr)) {
                            printf("\n\nEnter text to decrypt: ");
                            scanf("%c", &temp);
                            fgets(str, 39, stdin);
@@ -192,30 +193,30 @@ void do_substitution_decrypt() {
               }
 }
 
-_Bool is_valid_key(char* key){
-              _Bool is_valid_key = true;
+char is_valid_key(char* key){
+              char valid_key = 1;
               int sum = 0;
               if (strlen(key) == 26) {
                            for (int i = 0; i < 26; i++) {
                                          key[i] = toupper(key[i]);
                                          sum = sum + key[i];
                                          if (!isalpha(key[i])) {
-                                                       is_valid_key = false;
+                                                       valid_key = 0;
                                                        printf("Error: string is not all alpha\n");
                                                        break;
                                          }
                            }
                            if (sum != 2015) {
-                                         is_valid_key = false;
+                                         valid_key = 0;
                                          printf("Error: string contains repeats of letters\n");
                            }
               }
               else {
-              is_valid_key = false;
+              valid_key = 0;
               printf("Error: String is not 26 characters long\n");
               }
               
-              return is_valid_key;
+              return valid_key;
 }
 
 void read_dictionary() {
@@ -223,8 +224,7 @@ void read_dictionary() {
               int index = 0;
               FILE* f;
 
-              fopen("./google-10000-english.txt", "r"/*const char *filename, const char *mode*/);
-
+              f = fopen("words", "r"/*const char *filename, const char *mode*/);
               while (!feof(f)) {
                            //fgets(str, 21, f);
                            fscanf(f, "%s\n", str);
@@ -247,12 +247,12 @@ void read_dictionary() {
 
 }
 
-_Bool is_in_dictionary(char* str ) {
-              _Bool found = false;
+char is_in_dictionary(char* str ) {
+             char found = 0;
               for (int i = 0; i < 10000; i++) {
                            if (strcmp(dictionary[i], str) == 0) {
                                          printf("found it\n");
-                                         found = true;
+                                         found = 1;
                            }
 
               }
