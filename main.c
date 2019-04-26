@@ -360,7 +360,8 @@ int main() {
               printf("6) Brute force on a substitution ciper\n");
               printf("7) Quit\n");
               printf("Enter your choice: "); 
-              scanf("%c", &choice); //Reads the input of the user's choice
+              char tmp;
+              scanf("%c%c", &choice,&tmp); //Reads the input of the user's choice
 
                            switch(choice){ //Allows the user to do their chosen option
                                          case '1': do_rotation_encrypt(); 
