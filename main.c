@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 char is_valid_key(char* key);
+char rotation_encrypt(char c, int key);
 
 typedef struct { //creates a new 2D data type
               int key; //one dimension of the data type
@@ -346,21 +347,21 @@ void brute_force_substitution() {
 }*/
 
 int main() {
-              read_dictionary();
-              char choice; //initialises variable to hold the users menu choice
+    read_dictionary();
+    char choice; //initialises variable to hold the users menu choice
+    char tmp;
 
-              do { //do while loop continues until the while condition is met
-			  /*Offers a choice of what the code should do and prompts the user to select one*/
-              printf("\n\nDo you want to;\n");
-              printf("1) Encrypt with a rotation cipher\n");
-              printf("2) Decrypt a rotation cipher\n");
-              printf("3) Encrypt with a substitution cipher\n");
-              printf("4) Decrypt a substitution ciper\n");
-              printf("5) Brute force on rotation ciper\n");
-              printf("6) Brute force on a substitution ciper\n");
+    do { //do while loop continues until the while condition is met
+    /*Offers a choice of what the code should do and prompts the user to select one*/
+    printf("\n\nDo you want to;\n");
+    printf("1) Encrypt with a rotation cipher\n");
+    printf("2) Decrypt a rotation cipher\n");
+    printf("3) Encrypt with a substitution cipher\n");
+    printf("4) Decrypt a substitution ciper\n");
+    printf("5) Brute force on rotation ciper\n");
+    printf("6) Brute force on a substitution ciper\n");
               printf("7) Quit\n");
               printf("Enter your choice: "); 
-              char tmp;
               scanf("%c%c", &choice,&tmp); //Reads the input of the user's choice
 
                            switch(choice){ //Allows the user to do their chosen option
