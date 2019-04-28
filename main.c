@@ -284,8 +284,8 @@ void brute_force_rotation() {
     scanf("%c", &spare); //reads empty line
     fgets(str, 10000, stdin); //reads input
     const char s[2] = " "; //was space test and see token = strtok(str, s);
-    token = strtok(str, s);
-    while (token != NULL) { //while there are tokens in str
+    token = strtok(str, s); //breaks the string into tokens with the delimiters of s
+    while (token != NULL) { //while there are tokens left in str
         printf("%s\n", token);
         for (i = 1; i < 26; i++) {
             char* temp = strdup(token); //duplicates token so it is not destroyed
