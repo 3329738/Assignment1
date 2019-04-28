@@ -273,20 +273,22 @@ void do_substitution_decrypt() {
 
 /* recieves user input and tries each rotation key and prints the key, string and ... */
 void brute_force_rotation() {
-    char str[10000];
-    char temp;
+    char str[10000]; //assumes input will not exceed 10000 characters
+    char spare;
+    int i = 1;
     char* token;
-    char* next_token;
+    //char* next_token;
     //KeyFreq freqs[100] = {0};
     
     printf("Enter text to decrypt: "); //promts user for infomation
-    scanf("%c", &temp); //reads empty line
+    scanf("%c", &spare); //reads empty line
     fgets(str, 10000, stdin); //reads input
-    const char s[2] = "/n"; //was space test and see token = strtok(str, s);
-    while (token != NULL) { 
+    const char s[2] = " "; //was space test and see token = strtok(str, s);
+    token = strtok(str, s);
+    while (token != NULL) { //while there are tokens in str
         printf("%s\n", token);
-        for (int i = 1; i < 26; i++) {
-            char* temp = strdup(token);
+        for (i = 1; i < 26; i++) {
+            char* temp = strdup(token); //duplicates token so it is not destroyed
             rotation_decrypt_string(temp, i);
             if (is_in_dictionary(temp)) {
                 printf("Key is: %d, Str = %s, Temp = %s\n", i, str, temp);
@@ -298,7 +300,7 @@ void brute_force_rotation() {
 }
 
 void brute_force_substitution() {
-
+printf("Sorry");
 }
 
 /* Used to check the substitution keys are valid, it ensures the key has a length of 26, each character is a unique letter and amkes all uppercase */
@@ -364,10 +366,12 @@ char is_in_dictionary(char* str) {
     return found;
 }
 
+/* Meant to create a function that finds the most frequent key that occurs in brute force
+can't fully complete */
 /*void add_key(int key, KeyFreq *freqs){
     freqs[0].key = 12;
     freqs[0].freq = 1;
-    for (int i = 0, i < .., i++) {
+    for (int i = 0, i < 26, i++) {
         
 			  }
 }*/
