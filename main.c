@@ -277,24 +277,23 @@ void brute_force_rotation() {
     char temp;
     char* token;
     char* next_token;
-    KeyFreq freqs[100] = {0};
+    //KeyFreq freqs[100] = {0};
     
     printf("Enter text to decrypt: "); //promts user for infomation
-    scanf("%c", &temp);
-    fgets(str, 10000, stdin);
-    const char s[2] = " ";
-    token = strtok(str, s);
-    while (token != NULL) {
-        printf(" %s\n", token);
+    scanf("%c", &temp); //reads empty line
+    fgets(str, 10000, stdin); //reads input
+    const char s[2] = "/n"; //was space test and see token = strtok(str, s);
+    while (token != NULL) { 
+        printf("%s\n", token);
         for (int i = 1; i < 26; i++) {
             char* temp = strdup(token);
             rotation_decrypt_string(temp, i);
             if (is_in_dictionary(temp)) {
                 printf("Key is: %d, Str = %s, Temp = %s\n", i, str, temp);
             }
-            free(temp);
+            free(temp); //frees temp from memory so program doesn't become too slow
         }
-        token = strtok(NULL, str);
+        token = strtok(NULL, str); //makes token = 0
     }    
 }
 
@@ -341,7 +340,7 @@ void read_dictionary() {
         fscanf(f, "%s\n", str);
         for (int i = 0; i < strlen(str); i++) {
             if (str[i] == '\0')
-            str[i] = '\0';
+            str[i] = '\0'; //leaves newlines as newlines 
             if (isalpha(str[i])) {
                 str[i] = toupper(str[i]); //makes every word uppercase so it is consistant throughout the program to prevent case errors
             }
@@ -368,6 +367,7 @@ char is_in_dictionary(char* str) {
 /*void add_key(int key, KeyFreq *freqs){
     freqs[0].key = 12;
     freqs[0].freq = 1;
-    for () {
+    for (int i = 0, i < .., i++) {
+        
 			  }
 }*/
